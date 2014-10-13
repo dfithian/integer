@@ -37,11 +37,15 @@ LargeNumber & LargeNumber::operator++(){
 	*this += 1;
 	return *this;
 }
+LargeNumber & LargeNumber::operator--(){
+	*this -= 1;
+	return *this;
+}
 /** end incremental operators */
 
 /** LargeNumber operators */
 LargeNumber & LargeNumber::operator+=(const LargeNumber &rhs){
-	if (rhs.m_number.empty()) return *this;
+	if (rhs.getNumber().empty()) return *this;
 	if (m_number.empty()){
 		*this = rhs;
 		return *this;
@@ -79,9 +83,52 @@ LargeNumber & LargeNumber::operator+=(const LargeNumber &rhs){
 	return *this;
 }
 
+LargeNumber & LargeNumber::operator-=(const LargeNumber &rhs){
+	if (rhs.getNumber().empty()) return *this;
+	if (m_number.empty()){
+		m_number = LargeNumber::changeSign(rhs.getNumber());
+		return *this;
+	}
+	vector<int> number;
+	vector<int>::iterator lhsIter = m_number.begin();
+	vector<int>::const_iterator rhsIter = rhs.getNumber().begin();
+	const int lhsSign = *lhsIter;
+	const int rhsSign = *rhsIter;
+	++lhsIter; ++rhsIter;
+	number.push_back(LargeNumber::POSITIVE_TAG); //just keep it positive for now and change it later
+	while (lhsIter != m_number.end() && rhsIter != rhs.getNumber().end()){
+		if (lhsSign == LargeNumber::POSITIVE_TAG && rhsSign == LargeNumber::POSITIVE_TAG){
+			number.push_back(*lhsIter - *rhsIter);
+		} else if (lhsSign == LargeNumber::POSITIVE_TAG && rhsSign == LargeNumber::NEGATIVE_TAG){
+			number.push_back(*lhsIter + *rhsIter);
+		} else if (lhsSign == LargeNumber::NEGATIVE_TAG && rhsSign == LargeNumber::POSITIVE_TAG){
+			number.push_back(*rhsIter - *lhsIter);
+		} else if (lhsSign == LargeNumber::NEGATIVE_TAG && rhsSign == LargeNumber::POSITIVE_TAG){
+			number.push_back(-(*lhsIter + *rhsIter));
+		} else {
+			throw invalid_argument("Received LargeNumbers with invalid signs");
+		}
+		++lhsIter; ++rhsIter;
+	}
+	while (lhsIter != m_number.end()){
+		number.push_back(*lhsIter);
+		++lhsIter;
+	}
+	while (rhsIter != rhs.getNumber().end()){
+		number.push_back(*rhsIter);
+		++rhsIter;
+	}
+	m_number = refactor(number);
+	return *this;
+}
+
 const LargeNumber LargeNumber::operator+(const LargeNumber &other) const{
 	LargeNumber p = *this;
 	return (p += other);
+}
+const LargeNumber LargeNumber::operator-(const LargeNumber &other) const{
+	LargeNumber p = *this;
+	return (p -= other);
 }
 /** end LargeNumber operators */
 
@@ -120,6 +167,19 @@ vector<int> LargeNumber::refactor(vector<int> source){
 	}
 	return number;
 }
+vector<int> LargeNumber::changeSign(vector<int> source){
+	vector<int> number = source;
+	int sign = number.front();
+	if (sign == LargeNumber::POSITIVE_TAG){
+		number.front() = LargeNumber::NEGATIVE_TAG;
+	} else if (sign == LargeNumber::NEGATIVE_TAG){
+		number.front() == LargeNumber::POSITIVE_TAG;
+	} else {
+		throw invalid_argument("Invalid sign");
+	}
+	return number;
+}
+	
 void LargeNumber::copy(int source){
 	m_number.clear();
 	m_number.push_back((source < 0) ? LargeNumber::NEGATIVE_TAG : LargeNumber::POSITIVE_TAG);

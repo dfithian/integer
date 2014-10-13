@@ -7,6 +7,7 @@ using namespace std;
 
 void constructor_tests();
 void addition_tests();
+void subtraction_tests();
 
 int main(){
 	printf("Constructor module. Starting tests...\n");
@@ -16,6 +17,10 @@ int main(){
 	printf("Addition module. Starting tests...\n");
 	addition_tests();
 	printf("All addition tests passed!\n");
+	
+	printf("Subtraction module. Starting tests...\n");
+	subtraction_tests();
+	printf("All subtraction tests passed!\n");
 	
 	printf("All tests passed!\n");
 	return 0;
@@ -56,6 +61,8 @@ void constructor_tests(){
 	delete a;
 }
 
+//TODO: big numbers
+//TODO: negative numbers, all combinations of lhs, rhs, and sum
 void addition_tests(){
 	LargeNumber a;
 	a += LargeNumber(1);
@@ -66,4 +73,26 @@ void addition_tests(){
 	++a;
 	printf("Test that ++ LargeNumber works...\n");
 	assert(a.toString() == " 1");
+	
+	a = LargeNumber(1) + LargeNumber(1);
+	printf("Test that + LargeNumber works...\n");
+	assert(a.toString() == " 2");
+}
+
+//TODO: big numbers
+//TODO: negative numbers, all combinations of lhs, rhs, and sum
+void subtraction_tests(){
+	LargeNumber a(2);
+	a -= LargeNumber(1);
+	printf("Test that -= LargeNumber(1) works...\n");
+	assert(a.toString() == " 1");
+	
+	a = LargeNumber(2);
+	--a;
+	printf("Test that -- LargeNumber works...\n");
+	assert(a.toString() == " 1");
+	
+	a = LargeNumber(9) - LargeNumber(6);
+	printf("Test that - LargeNumber works...\n");
+	assert(a.toString() == " 3");
 }

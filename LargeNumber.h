@@ -14,10 +14,13 @@ class LargeNumber{
   		LargeNumber & operator=(const LargeNumber &rhs);
   		
   		LargeNumber & operator++();
+  		LargeNumber & operator--();
 
   		LargeNumber & operator+=(const LargeNumber &rhs);
+  		LargeNumber & operator-=(const LargeNumber &rhs);
 
   		const LargeNumber LargeNumber::operator+(const LargeNumber &other) const;
+  		const LargeNumber LargeNumber::operator-(const LargeNumber &other) const;
 
   		const void print() const;
   		const std::string toString() const;
@@ -28,6 +31,7 @@ class LargeNumber{
   		std::vector<int> m_number;
   		static std::string intToString(int n);
   		static std::vector<int> refactor(std::vector<int> source);
+  		static std::vector<int> changeSign(std::vector<int> source);
   		bool isNegative();
   		void copy(int source);
   		void copy(int* source, int size);
