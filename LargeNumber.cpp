@@ -30,6 +30,9 @@ LargeNumber & LargeNumber::operator=(const LargeNumber &rhs){
 	m_number = rhs.m_number;
 	return *this;
 }
+LargeNumber & LargeNumber::operator=(const int &rhs){
+	copy(rhs);
+}
 /** end construction and assignment operators */
 
 /** incremental operators */
@@ -37,8 +40,16 @@ LargeNumber & LargeNumber::operator++(){
 	*this += 1;
 	return *this;
 }
+LargeNumber & LargeNumber::operator++(int n){
+	*this += LargeNumber(n);
+	return *this;
+}
 LargeNumber & LargeNumber::operator--(){
 	*this -= 1;
+	return *this;
+}
+LargeNumber & LargeNumber::operator--(int n){
+	*this += LargeNumber(n);
 	return *this;
 }
 /** end incremental operators */
@@ -122,6 +133,16 @@ LargeNumber & LargeNumber::operator-=(const LargeNumber &rhs){
 	return *this;
 }
 
+LargeNumber & LargeNumber::operator*=(const LargeNumber &rhs){
+	return *this;
+}
+LargeNumber & LargeNumber::operator/=(const LargeNumber &rhs){
+	return *this;
+}
+LargeNumber & LargeNumber::operator%=(const LargeNumber &rhs){
+	return *this;
+}
+
 const LargeNumber LargeNumber::operator+(const LargeNumber &other) const{
 	LargeNumber p = *this;
 	return (p += other);
@@ -130,7 +151,74 @@ const LargeNumber LargeNumber::operator-(const LargeNumber &other) const{
 	LargeNumber p = *this;
 	return (p -= other);
 }
+const LargeNumber LargeNumber::operator*(const LargeNumber &other) const{
+	LargeNumber p = *this;
+	return (p *= other);
+}
+const LargeNumber LargeNumber::operator/(const LargeNumber &other) const{
+	LargeNumber p = *this;
+	return (p /= other);
+}
+const LargeNumber LargeNumber::operator%(const LargeNumber &other) const{
+	LargeNumber p = *this;
+	return (p %= other);
+}
 /** end LargeNumber operators */
+
+/** integer operators */
+LargeNumber & LargeNumber::operator+=(const int &rhs){
+	return (*this += LargeNumber(rhs));
+}
+LargeNumber & LargeNumber::operator-=(const int &rhs){
+	return (*this -= LargeNumber(rhs));
+}
+LargeNumber & LargeNumber::operator*=(const int &rhs){
+	return (*this *= LargeNumber(rhs));
+}
+LargeNumber & LargeNumber::operator/=(const int &rhs){
+	return (*this /= LargeNumber(rhs));
+}
+LargeNumber & LargeNumber::operator%=(const int &rhs){
+	return (*this %= LargeNumber(rhs));
+}
+const LargeNumber LargeNumber::operator+(const int &other) const{
+	LargeNumber p = *this;
+	return (p += LargeNumber(other));
+}
+const LargeNumber LargeNumber::operator-(const int &other) const{
+	LargeNumber p = *this;
+	return (p -= LargeNumber(other));
+}
+const LargeNumber LargeNumber::operator*(const int &other) const{
+	LargeNumber p = *this;
+	return (p *= LargeNumber(other));
+}
+const LargeNumber LargeNumber::operator/(const int &other) const{
+	LargeNumber p = *this;
+	return (p /= LargeNumber(other));
+}
+const LargeNumber LargeNumber::operator%(const int &other) const{
+	LargeNumber p = *this;
+	return (p %= LargeNumber(other));
+}
+/** end integer operators */
+
+
+/** comparison operators */
+const bool LargeNumber::operator==(const int& rhs) const { return (*this == LargeNumber(rhs)); }
+const bool LargeNumber::operator!=(const int& rhs) const { return (*this != LargeNumber(rhs)); }
+const bool LargeNumber::operator> (const int& rhs) const { return (*this >  LargeNumber(rhs)); }
+const bool LargeNumber::operator< (const int& rhs) const { return (*this <  LargeNumber(rhs)); }
+const bool LargeNumber::operator>=(const int& rhs) const { return (*this >= LargeNumber(rhs)); }
+const bool LargeNumber::operator<=(const int& rhs) const { return (*this <= LargeNumber(rhs)); }
+
+const bool LargeNumber::operator==(const LargeNumber& rhs) const { return false; }
+const bool LargeNumber::operator!=(const LargeNumber& rhs) const { return !(*this == rhs); }
+const bool LargeNumber::operator> (const LargeNumber& rhs) const { return false; }
+const bool LargeNumber::operator< (const LargeNumber& rhs) const { return !((*this > rhs) && (*this == rhs)); }
+const bool LargeNumber::operator>=(const LargeNumber& rhs) const { return ((*this > rhs) || (*this == rhs)); }
+const bool LargeNumber::operator<=(const LargeNumber& rhs) const { return ((*this < rhs) || (*this == rhs)); }
+/** end comparison operators */
 
 /** accessibility operators */
 const void LargeNumber::print() const{
