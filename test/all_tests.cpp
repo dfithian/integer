@@ -1,7 +1,7 @@
 #include <iostream>
 #include <assert.h>
 #include <stdexcept>
-#include "../LargeNumber.h"
+#include "../src/LargeNumber.h"
 
 using namespace std;
 
