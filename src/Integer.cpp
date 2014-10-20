@@ -66,11 +66,11 @@ Integer & Integer::operator=(const unsigned long &rhs){
 
 /** incremental operators */
 Integer & Integer::operator++(){
-	*this += 1;
+	*this += Integer(1);
 	return *this;
 }
 Integer & Integer::operator--(){
-	*this -= 1;
+	*this -= Integer(1);
 	return *this;
 }
 Integer & Integer::operator++(int n){
@@ -78,7 +78,7 @@ Integer & Integer::operator++(int n){
 	return *this;
 }
 Integer & Integer::operator--(int n){
-	*this += Integer(n);
+	*this -= Integer(n);
 	return *this;
 }
 /** end incremental operators */
@@ -133,7 +133,11 @@ Integer & Integer::operator/=(const Integer &rhs){
 Integer & Integer::operator%=(const Integer &rhs){
 	if (rhs.getNumber().empty() || rhs == 0) throw invalid_argument("Divide by zero error");
 	else if (m_number.empty() || *this == 0) *this = Integer(0);
-	else this->m_number = moduloUnsigned(*this, rhs);
+	else {
+		if (m_sign != rhs.getSign()) m_sign = NEG;
+		else m_sign = POS;
+		this->m_number = moduloUnsigned(*this, rhs);
+	}
 	return *this;
 }
 
@@ -555,6 +559,10 @@ vector<int> Integer::addUnsigned(const Integer &lhs, const Integer &rhs){
 		newNumber.at(i) = remainder % 10;
 		remainder /= 10;
 	}
+	while (remainder > 0){
+		newNumber.push_back(remainder % 10);
+		remainder /= 10;
+	}
 	stripZeros(newNumber);
 	return newNumber;
 }
@@ -598,7 +606,7 @@ vector<int> Integer::multiplyUnsigned(const Integer &lhs, const Integer &rhs){
 	for (vector<int>::const_iterator thisIter = thisNumber.begin(); thisIter != thisNumber.end(); ++thisIter, i++){
 		int j = 0;
 		for (vector<int>::const_iterator thatIter = thatNumber.begin(); thatIter != thatNumber.end(); ++thatIter, j++){
-			newNumber.at(i + j) = (*thisIter * *thatIter);
+			newNumber.at(i + j) += ((*thisIter) * (*thatIter));
 		}
 	}
 	
@@ -614,12 +622,12 @@ vector<int> Integer::multiplyUnsigned(const Integer &lhs, const Integer &rhs){
 }
 vector<int> Integer::divideUnsigned(const Integer & lhs, const Integer & rhs){
 	if (rhs == 0) throw invalid_argument("Divide by zero error");
-	else if (lhs == 0 || lhs < rhs) return zero();
+	else if (lhs == 0 || rhs ^ lhs) return zero();
 	Integer newNumber(lhs.getNumber());
 	newNumber.setSign(lhs.getSign());
 
 	Integer d;
-	for (d; newNumber >= rhs; newNumber -= rhs, d++){
+	for (d; newNumber ^= rhs; newNumber = subtractUnsigned(newNumber, rhs), ++d){
 		//d grows by one and newNumber decrements by rhs on each loop
 		//loop is broken when newNumber < rhs
 	}
@@ -629,11 +637,11 @@ vector<int> Integer::divideUnsigned(const Integer & lhs, const Integer & rhs){
 vector<int> Integer::moduloUnsigned(const Integer & lhs, const Integer & rhs){
 	if (rhs == 0) throw invalid_argument("Divide by zero error");
 	else if (lhs == 0) return zero();
-	else if (lhs < rhs) return lhs.getNumber();
+	else if (rhs ^ lhs) return lhs.getNumber();
 	Integer newNumber(lhs.getNumber());
 	
 	Integer d;
-	for (d; newNumber >= rhs; newNumber -= rhs, d++){ }
+	for (d; newNumber ^= rhs; newNumber = subtractUnsigned(newNumber, rhs), ++d){ }
 	newNumber.stripZeros();
 	return newNumber.getNumber();
 }
@@ -644,6 +652,7 @@ void Integer::stripZeros(vector<int> &source){
 		iter++; i++;
 	}
 	source.resize(source.size() - i);
+	if (source.size() == 0 || source.empty()) source.push_back(0);
 }
 vector<int> Integer::zero(){
 	vector<int> newNumber;

@@ -15,29 +15,29 @@ void modulo_tests();
 int main(){
 	printf("Constructor module. Starting tests...\n");
 	constructor_tests();
-	printf("All constructor tests passed!\n");
+	printf("All constructor tests passed!\n\n");
 	
 	printf("Addition module. Starting tests...\n");
 	addition_tests();
-	printf("All addition tests passed!\n");
+	printf("All addition tests passed!\n\n");
 	
 	printf("Subtraction module. Starting tests...\n");
 	subtraction_tests();
-	printf("All subtraction tests passed!\n");
+	printf("All subtraction tests passed!\n\n");
 	
 	printf("Multiplication module. Starting tests...\n");
 	multiplication_tests();
-	printf("All multiplication tests passed!\n");
+	printf("All multiplication tests passed!\n\n");
 	
 	printf("Division module. Starting tests...\n");
 	division_tests();
-	printf("All division tests passed!\n");
+	printf("All division tests passed!\n\n");
 	
 	printf("Modulo module. Starting tests...\n");
 	modulo_tests();
-	printf("All modulo tests passed!\n");
+	printf("All modulo tests passed!\n\n");
 	
-	printf("All tests passed!\n");
+	printf("All tests passed!\n\n");
 	return 0;
 }
 
@@ -129,10 +129,7 @@ void addition_tests(){
 	assert(a.toString() == "292916778");
 }
 
-//TODO: big numbers
-//TODO: negative numbers, all combinations of lhs, rhs, and sum
 void subtraction_tests(){
-	assert(Integer(2) > Integer(1));
 	Integer a(2);
 	a -= Integer(1);
 	printf("Test that -= Integer(1) works...\n");
@@ -170,10 +167,118 @@ void subtraction_tests(){
 }
 
 void multiplication_tests(){
+	Integer a(2);
+	a *= Integer(1);
+	printf("Test that *= Integer(1) works...\n");
+	assert(a.toString() == "2");
+	
+	a = Integer(9) * Integer(6);
+	printf("Test that * Integer works...\n");
+	assert(a.toString() == "54");
+	
+	a = Integer(12345) * Integer((unsigned long)29292);
+	assert(a.toString() == "361609740");
+
+	a = Integer(-12345) * Integer((long)-29292);
+	assert(a.toString() == "361609740");
+
+	a = Integer((long)-29292) * Integer(-12345);
+	assert(a.toString() == "361609740");
+	
+	a = Integer(12345) * Integer((long)-29292);
+	assert(a.toString() == "-361609740");
+	
+	a = Integer((long)-29292) * Integer(12345);
+	assert(a.toString() == "-361609740");
+	
+	a = Integer((long)29292) * Integer(-12345);
+	assert(a.toString() == "-361609740");
 }
 
 void division_tests(){
+	Integer a(2);
+	a /= Integer(1);
+	printf("Test that /= Integer(1) works...\n");
+	assert(a.toString() == "2");
+	
+	a = Integer(9) / Integer(3);
+	printf("Test that / Integer works...\n");
+	assert(a.toString() == "3");
+	
+	a = Integer(12345) / Integer((unsigned long)29292);
+	assert(a.toString() == "0");
+
+	a = Integer(-12345) / Integer((long)-29292);
+	assert(a.toString() == "0");
+
+	a = Integer((long)-29292) / Integer(-12345);
+	assert(a.toString() == "2");
+	
+	a = Integer((long)-29292) / Integer(12345);
+	assert(a.toString() == "-2");
+	
+	a = Integer((long)29292) / Integer(-12345);
+	assert(a.toString() == "-2");
+	
+	a = Integer(292929123) / Integer(2345);
+	assert(a.toString() == "124916");
+	
+	a = Integer(292929123) / Integer(-2345);
+	assert(a.toString() == "-124916");
+	
+	a = Integer(-292929123) / Integer(2345);
+	assert(a.toString() == "-124916");
+	
+	a = Integer(-292929123) / Integer(-2345);
+	assert(a.toString() == "124916");
+	
+	a = Integer((long)-292929123) / Integer(9929);
+	assert(a.toString() == "-29502");
+	
+	a = Integer((long)292929123) / Integer(-9929);
+	assert(a.toString() == "-29502");
 }
 
 void modulo_tests(){
+	Integer a(2);
+	a %= Integer(1);
+	printf("Test that \%= Integer(1) works...\n");
+	assert(a.toString() == "0");
+	
+	a = Integer(9) % Integer(5);
+	printf("Test that \% Integer works...\n");
+	assert(a.toString() == "4");
+	
+	a = Integer(12345) % Integer((unsigned long)29292);
+	assert(a.toString() == "12345");
+
+	a = Integer(-12345) % Integer((long)-29292);
+	assert(a.toString() == "12345");
+
+	a = Integer((long)-29292) % Integer(-12345);
+	assert(a.toString() == "4602");
+	
+	a = Integer((long)-29292) % Integer(12345);
+	assert(a.toString() == "-4602");
+	
+	a = Integer((long)29292) % Integer(-12345);
+	assert(a.toString() == "-4602");
+	
+	a = Integer(292929123) % Integer(2345);
+	assert(a.toString() == "1103");
+	
+	a = Integer(292929123) % Integer(-2345);
+	assert(a.toString() == "-1103");
+	
+	a = Integer(-292929123) % Integer(2345);
+	assert(a.toString() == "-1103");
+	
+	a = Integer(-292929123) % Integer(-2345);
+	assert(a.toString() == "1103");
+	
+	a = Integer((long)-292929123) % Integer(9929);
+	assert(a.toString() == "-3765");
+	
+	a = Integer((long)292929123) % Integer(-9929);
+	assert(a.toString() == "-3765");
 }
