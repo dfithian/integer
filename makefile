@@ -1,11 +1,11 @@
 tests:
 	$(MAKE) library
-	g++ -Llib/ -lLargeNumber test/all_tests.cpp -o obj/test.o
+	g++ -Llib/ -lInteger test/all_tests.cpp -o obj/test.o
 
 library:
-	g++ -c src/LargeNumber.cpp src/LargeNumber.h
-	mv LargeNumber.o obj/
-	ar rvs lib/libLargeNumber.a obj/LargeNumber.o
+	g++ -c src/Integer.cpp src/Integer.h
+	mv Integer.o obj/
+	ar rvs lib/libInteger.a obj/Integer.o
 
 clean:
 	rm -rf *.o
