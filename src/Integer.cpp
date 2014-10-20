@@ -87,15 +87,11 @@ Integer & Integer::operator--(int n){
 Integer & Integer::operator+=(const Integer &rhs){
 	if (!rhs.getNumber().empty() && m_number.empty()) *this = rhs;
 	else if (m_sign == rhs.getSign()) this->m_number = addUnsigned(*this, rhs);
-	else {
-		if (*this == rhs) *this = Integer(0);
-		else{
-			if (*this ^ rhs) this->m_number = subtractUnsigned(*this, rhs);
-			else{
-				this->m_number = subtractUnsigned(rhs, *this);
-				this->m_sign = rhs.getSign();
-			}
-		}
+	else if (*this == rhs) *this = Integer(0);
+	else if (*this ^ rhs) this->m_number = subtractUnsigned(*this, rhs);
+	else{
+		this->m_number = subtractUnsigned(rhs, *this);
+		this->m_sign = rhs.getSign();
 	}
 	return *this;
 }
@@ -106,10 +102,11 @@ Integer & Integer::operator-=(const Integer &rhs){
 		this->m_sign = (m_sign == POS) ? NEG : POS;
 	}
 	else if (m_sign != rhs.getSign()) this->m_number = addUnsigned(*this, rhs);
-	else {
-		if (*this == rhs) *this = Integer(0);
-		else if (*this > rhs) this->m_number = subtractUnsigned(*this, rhs);
-		else this->m_number = subtractUnsigned(rhs, *this);
+	else if (*this == rhs) *this = Integer(0);
+	else if (*this ^ rhs) this->m_number = subtractUnsigned(*this, rhs);
+	else{
+		this->m_number = subtractUnsigned(rhs, *this);
+		this->m_sign = (m_sign == NEG) ? POS : NEG;
 	}
 	return *this;
 }

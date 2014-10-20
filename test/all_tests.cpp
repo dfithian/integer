@@ -92,8 +92,6 @@ void constructor_tests(){
 	delete a;
 }
 
-//TODO: big numbers
-//TODO: negative numbers, all combinations of lhs, rhs, and sum
 void addition_tests(){
 	Integer a;
 	a += Integer(1);
@@ -148,6 +146,27 @@ void subtraction_tests(){
 	a = Integer(9) - Integer(6);
 	printf("Test that - Integer works...\n");
 	assert(a.toString() == "3");
+	
+	a = Integer(12345) - Integer((unsigned long)292929123);
+	assert(a.toString() == "-292916778");
+	
+	a = Integer(123412345) - Integer(292929123);
+	assert(a.toString() == "-169516778");
+
+	a = Integer(-12345) - Integer((long)-292929123);
+	assert(a.toString() == "292916778");
+
+	a = Integer((long)-292929123) - Integer(-12345);
+	assert(a.toString() == "-292916778");
+	
+	a = Integer(12345) - Integer((long)-292929123);
+	assert(a.toString() == "292941468");
+	
+	a = Integer((long)-292929123) - Integer(12345);
+	assert(a.toString() == "-292941468");
+	
+	a = Integer((long)292929123) - Integer(-12345);
+	assert(a.toString() == "292941468");
 }
 
 void multiplication_tests(){
