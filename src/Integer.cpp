@@ -35,12 +35,23 @@ Integer::Integer(vector<int> num){
 	m_number = num;
 	m_sign = POS;
 }
+Integer::Integer(const Integer &old){
+	m_number.clear();
+	vector<int> thatNumber = old.getNumber();
+	for(vector<int>::const_iterator iter = thatNumber.begin(); iter != thatNumber.end(); ++iter){
+		m_number.push_back(*iter);
+	}
+	m_sign = old.getSign();
+}
 Integer::~Integer(){
 	m_number.clear();
 }
 Integer & Integer::operator=(const Integer &rhs){
 	m_number.clear();
-	m_number = rhs.getNumber();
+	vector<int> thatNumber = rhs.getNumber();
+	for (vector<int>::const_iterator iter = thatNumber.begin(); iter != thatNumber.end(); ++iter){
+		m_number.push_back(*iter);
+	}
 	m_sign = rhs.getSign();
 	return *this;
 }
@@ -88,7 +99,7 @@ Integer & Integer::operator+=(const Integer &rhs){
 	if (!rhs.getNumber().empty() && m_number.empty()) *this = rhs;
 	else if (m_sign == rhs.getSign()) this->m_number = addUnsigned(*this, rhs);
 	else if (*this == rhs) *this = Integer(0);
-	else if (*this ^ rhs) this->m_number = subtractUnsigned(*this, rhs);
+	else if (this->value() > rhs.value()) this->m_number = subtractUnsigned(*this, rhs);
 	else{
 		this->m_number = subtractUnsigned(rhs, *this);
 		this->m_sign = rhs.getSign();
@@ -103,7 +114,7 @@ Integer & Integer::operator-=(const Integer &rhs){
 	}
 	else if (m_sign != rhs.getSign()) this->m_number = addUnsigned(*this, rhs);
 	else if (*this == rhs) *this = Integer(0);
-	else if (*this ^ rhs) this->m_number = subtractUnsigned(*this, rhs);
+	else if (this->value() >= rhs.value()) this->m_number = subtractUnsigned(*this, rhs);
 	else{
 		this->m_number = subtractUnsigned(rhs, *this);
 		this->m_sign = (m_sign == NEG) ? POS : NEG;
@@ -450,21 +461,13 @@ const bool Integer::operator< (const Integer& rhs) const { return !((*this > rhs
 const bool Integer::operator>=(const Integer& rhs) const { return  ((*this > rhs) || (*this == rhs)); }
 const bool Integer::operator<=(const Integer& rhs) const { return  ((*this < rhs) || (*this == rhs)); }
 const bool Integer::operator!=(const Integer& rhs) const { return !(*this == rhs); }
-const bool Integer::operator^ (const Integer& rhs) const {
-	Integer thisAbsoluteValue(*this);
-	thisAbsoluteValue.setSign(POS);
-	Integer thatAbsoluteValue(rhs);
-	thatAbsoluteValue.setSign(POS);
-	return (thisAbsoluteValue > thatAbsoluteValue);
-}
-const bool Integer::operator^=(const Integer& rhs) const {
-	Integer thisAbsoluteValue(*this);
-	thisAbsoluteValue.setSign(POS);
-	Integer thatAbsoluteValue(rhs);
-	thatAbsoluteValue.setSign(POS);
-	return (thisAbsoluteValue > thatAbsoluteValue || thisAbsoluteValue == thatAbsoluteValue);
-}
 /** end comparison operators */
+
+const Integer Integer::value() const{
+	Integer newNumber(*this);
+	newNumber.setSign(POS);
+	return newNumber;
+}
 
 /** accessibility operators */
 const void Integer::print() const{
@@ -568,7 +571,7 @@ vector<int> Integer::addUnsigned(const Integer &lhs, const Integer &rhs){
 }
 //always assumes m_number is larger
 vector<int> Integer::subtractUnsigned(const Integer &lhs, const Integer &rhs){
-	if (rhs ^ lhs) throw invalid_argument("Must subtract smaller from larger in subtractUnsigned");
+	if (rhs.value() > lhs.value()) throw invalid_argument("Must subtract smaller from larger in subtractUnsigned");
 	else if (lhs == rhs) return zero();
 	vector<int> newNumber;
 	vector<int> thisNumber = lhs.getNumber();
@@ -622,28 +625,57 @@ vector<int> Integer::multiplyUnsigned(const Integer &lhs, const Integer &rhs){
 }
 vector<int> Integer::divideUnsigned(const Integer & lhs, const Integer & rhs){
 	if (rhs == 0) throw invalid_argument("Divide by zero error");
-	else if (lhs == 0 || rhs ^ lhs) return zero();
-	Integer newNumber(lhs.getNumber());
-	newNumber.setSign(lhs.getSign());
-
-	Integer d;
-	for (d; newNumber ^= rhs; newNumber = subtractUnsigned(newNumber, rhs), ++d){
-		//d grows by one and newNumber decrements by rhs on each loop
-		//loop is broken when newNumber < rhs
+	else if (lhs == 0 || rhs.value() > lhs.value()) return zero();
+	Integer bottom(rhs);
+	Integer top(lhs);
+	
+	Integer q = recursiveDivide(top, bottom);
+	q.stripZeros();
+	return q.getNumber();
+}
+Integer Integer::recursiveDivide(Integer dividend, Integer divisor){
+	const Integer constDivisor = divisor;
+	Integer quotient(1);
+	if (divisor.value() == dividend.value()){
+		return Integer(1);
+	}else if (dividend.value() < divisor.value()){
+		return Integer(0);
 	}
-	d.stripZeros();
-	return d.getNumber();
+	while (divisor.value() < dividend.value()){
+		divisor *= 2;
+		quotient *= 2;
+	}
+	if (divisor.value() > dividend.value()) { divisor /= 2; quotient /= 2; }
+
+	quotient += recursiveDivide(dividend.value() - divisor.value(), constDivisor);
+	return quotient;
 }
 vector<int> Integer::moduloUnsigned(const Integer & lhs, const Integer & rhs){
 	if (rhs == 0) throw invalid_argument("Divide by zero error");
 	else if (lhs == 0) return zero();
-	else if (rhs ^ lhs) return lhs.getNumber();
-	Integer newNumber(lhs.getNumber());
+	else if (rhs.value() > lhs.value()) return lhs.getNumber();
+	Integer bottom(rhs);
+	Integer top(lhs);
 	
-	Integer d;
-	for (d; newNumber ^= rhs; newNumber = subtractUnsigned(newNumber, rhs), ++d){ }
-	newNumber.stripZeros();
-	return newNumber.getNumber();
+	Integer r = recursiveModulo(top, bottom);
+	r.stripZeros();
+	return r.getNumber();
+}
+Integer Integer::recursiveModulo(Integer dividend, Integer divisor){
+	const Integer constDivisor = divisor;
+	Integer remainder(0);
+	if (divisor.value() == dividend.value()){
+		return Integer(0);
+	}else if (dividend.value() < divisor.value()){
+		return dividend;
+	}
+	while (divisor.value() < dividend.value()){
+		divisor *= 2;
+	}
+	if (divisor.value() > dividend.value()) { divisor /= 2; }
+	
+	remainder += recursiveModulo(dividend.value() - divisor.value(), constDivisor);
+	return remainder;
 }
 void Integer::stripZeros(vector<int> &source){
 	int i = 0;
