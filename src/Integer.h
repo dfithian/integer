@@ -13,6 +13,7 @@ class Integer{
   		Integer(unsigned long);
   		Integer(int*, int);
   		Integer(std::vector<int>);
+  		Integer(const Integer &);
   		~Integer();
   		Integer & operator=(const Integer &rhs);
   		Integer & operator=(const int &rhs);
@@ -47,9 +48,6 @@ class Integer{
         const bool operator< (const Integer& rhs) const;
         const bool operator>=(const Integer& rhs) const;
         const bool operator<=(const Integer& rhs) const;
-        //absolute value operator
-        const bool operator^ (const Integer& rhs) const;
-        const bool operator^=(const Integer& rhs) const;
   		
   		Integer & operator+=(const int &rhs);
   		Integer & operator-=(const int &rhs);
@@ -154,6 +152,8 @@ class Integer{
   		const std::string toString() const;
   		const std::string debug() const;
   		
+  		const Integer value() const;
+  		
   		inline std::vector<int> const getNumber() const { return m_number; };
   		inline Integer::Sign const getSign() const { return m_sign; };
   		inline void setSign(Integer::Sign newSign) { m_sign = newSign; };
@@ -175,6 +175,9 @@ class Integer{
   		static std::vector<int> multiplyUnsigned(const Integer &lhs, const Integer &rhs);
   		static std::vector<int> divideUnsigned(const Integer &lhs, const Integer &rhs);
   		static std::vector<int> moduloUnsigned(const Integer &lhs, const Integer &rhs);
+
+  		static Integer recursiveDivide(Integer dividend, Integer divisor);
+  		static Integer recursiveModulo(Integer dividend, Integer divisor);
   		
   		static void stripZeros(std::vector<int> &source);
   		static std::vector<int> zero();
