@@ -57,21 +57,27 @@ Integer & Integer::operator=(const Integer &rhs){
 }
 Integer & Integer::operator=(const int &rhs){
 	copy(rhs);
+	return *this;
 }
 Integer & Integer::operator=(const unsigned int &rhs){
 	copy(rhs);
+	return *this;
 }
 Integer & Integer::operator=(const short &rhs){
 	copy(rhs);
+	return *this;
 }
 Integer & Integer::operator=(const unsigned short &rhs){
 	copy(rhs);
+	return *this;
 }
 Integer & Integer::operator=(const long &rhs){
 	copy(rhs);
+	return *this;
 }
 Integer & Integer::operator=(const unsigned long &rhs){
 	copy(rhs);
+	return *this;
 }
 /** end construction and assignment operators */
 
