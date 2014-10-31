@@ -199,56 +199,56 @@ void division_tests(){
 	Integer a(2);
 	a /= Integer(1);
 	printf("Test that /= Integer(1) works...\n");
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "2");
 	
 	a = Integer(9) / Integer(3);
 	printf("Test that / Integer works...\n");
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "3");
 	
 	a = Integer(12345) / Integer((unsigned long)29292);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "0");
 
 	a = Integer(-12345) / Integer((long)-29292);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "0");
 
 	a = Integer((long)-29292) / Integer(-12345);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "2");
 	
 	a = Integer((long)-29292) / Integer(12345);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "-2");
 	
 	a = Integer((long)29292) / Integer(-12345);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "-2");
 	
 	a = Integer(292929123) / Integer(2345);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "124916");
 	
 	a = Integer(292929123) / Integer(-2345);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "-124916");
 	
 	a = Integer(-292929123) / Integer(2345);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "-124916");
 	
 	a = Integer(-292929123) / Integer(-2345);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "124916");
 	
 	a = Integer((long)-292929123) / Integer(9929);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "-29502");
 	
 	a = Integer((long)292929123) / Integer(-9929);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "-29502");
 }
 
@@ -256,55 +256,55 @@ void modulo_tests(){
 	Integer a(2);
 	a %= Integer(1);
 	printf("Test that mod= Integer(1) works...\n");
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "0");
 	
 	a = Integer(9) % Integer(5);
 	printf("Test that mod Integer works...\n");
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "4");
 	
 	a = Integer(12345) % Integer((unsigned long)29292);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "12345");
 
 	a = Integer(-12345) % Integer((long)-29292);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "12345");
 
 	a = Integer((long)-29292) % Integer(-12345);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "4602");
 	
 	a = Integer((long)-29292) % Integer(12345);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "-4602");
 	
 	a = Integer((long)29292) % Integer(-12345);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "-4602");
 	
 	a = Integer(292929123) % Integer(2345);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "1103");
 	
 	a = Integer(292929123) % Integer(-2345);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "-1103");
 	
 	a = Integer(-292929123) % Integer(2345);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "-1103");
 	
 	a = Integer(-292929123) % Integer(-2345);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "1103");
 	
 	a = Integer((long)-292929123) % Integer(9929);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "-3765");
 	
 	a = Integer((long)292929123) % Integer(-9929);
-	printf(a.debug().c_str()); printf("\n");
+	printf("%s", a.debug().c_str()); printf("\n");
 	assert(a.toString() == "-3765");
 }
