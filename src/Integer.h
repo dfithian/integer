@@ -3,44 +3,46 @@
 #include <string>
 #include <vector>
 class Integer{
- 	public:
-  		Integer();
-  		Integer(int);
-  		Integer(unsigned int);
-  		Integer(short);
-  		Integer(unsigned short);
-  		Integer(long);
-  		Integer(unsigned long);
-  		Integer(int*, int);
-  		Integer(std::vector<int>);
-  		Integer(const Integer &);
-  		~Integer();
-  		Integer & operator=(const Integer &rhs);
-  		Integer & operator=(const int &rhs);
-  		Integer & operator=(const unsigned int &rhs);
-  		Integer & operator=(const short &rhs);
-  		Integer & operator=(const unsigned short &rhs);
-  		Integer & operator=(const long &rhs);
-  		Integer & operator=(const unsigned long &rhs);
+    public:
+        Integer();
+        Integer(int);
+        Integer(unsigned int);
+        Integer(short);
+        Integer(unsigned short);
+        Integer(long);
+        Integer(unsigned long);
+        Integer(int*, int);
+        Integer(std::vector<int>);
+        Integer(const Integer &);
+        Integer(std::string);
+        Integer(char*);
+        ~Integer();
+        Integer & operator=(const Integer &rhs);
+        Integer & operator=(const int &rhs);
+        Integer & operator=(const unsigned int &rhs);
+        Integer & operator=(const short &rhs);
+        Integer & operator=(const unsigned short &rhs);
+        Integer & operator=(const long &rhs);
+        Integer & operator=(const unsigned long &rhs);
 
-  		enum Sign { NEG, POS };
-  		
-  		Integer & operator++();
-  		Integer & operator--();
-  		Integer & operator++(int);
-  		Integer & operator--(int);
+        enum Sign { NEG, POS };
 
-  		Integer & operator+=(const Integer &rhs);
-  		Integer & operator-=(const Integer &rhs);
-  		Integer & operator*=(const Integer &rhs);
-  		Integer & operator/=(const Integer &rhs);
-  		Integer & operator%=(const Integer &rhs);
+        Integer & operator++();
+        Integer & operator--();
+        Integer & operator++(int);
+        Integer & operator--(int);
 
-  		const Integer operator+(const Integer &other) const;
-  		const Integer operator-(const Integer &other) const;
-  		const Integer operator*(const Integer &other) const;
-  		const Integer operator/(const Integer &other) const;
-  		const Integer operator%(const Integer &other) const;
+        Integer & operator+=(const Integer &rhs);
+        Integer & operator-=(const Integer &rhs);
+        Integer & operator*=(const Integer &rhs);
+        Integer & operator/=(const Integer &rhs);
+        Integer & operator%=(const Integer &rhs);
+
+        const Integer operator+(const Integer &other) const;
+        const Integer operator-(const Integer &other) const;
+        const Integer operator*(const Integer &other) const;
+        const Integer operator/(const Integer &other) const;
+        const Integer operator%(const Integer &other) const;
 
         const bool operator==(const Integer& rhs) const;
         const bool operator!=(const Integer& rhs) const;
@@ -48,69 +50,69 @@ class Integer{
         const bool operator< (const Integer& rhs) const;
         const bool operator>=(const Integer& rhs) const;
         const bool operator<=(const Integer& rhs) const;
-  		
-  		Integer & operator+=(const int &rhs);
-  		Integer & operator-=(const int &rhs);
-  		Integer & operator*=(const int &rhs);
-  		Integer & operator/=(const int &rhs);
-  		Integer & operator%=(const int &rhs);
-  		Integer & operator+=(const unsigned int &rhs);
-  		Integer & operator-=(const unsigned int &rhs);
-  		Integer & operator*=(const unsigned int &rhs);
-  		Integer & operator/=(const unsigned int &rhs);
-  		Integer & operator%=(const unsigned int &rhs);
-		Integer & operator+=(const short &rhs);
-  		Integer & operator-=(const short &rhs);
-  		Integer & operator*=(const short &rhs);
-  		Integer & operator/=(const short &rhs);
-  		Integer & operator%=(const short &rhs);
-  		Integer & operator+=(const unsigned short &rhs);
-  		Integer & operator-=(const unsigned short &rhs);
-  		Integer & operator*=(const unsigned short &rhs);
-  		Integer & operator/=(const unsigned short &rhs);
-  		Integer & operator%=(const unsigned short &rhs);
-  		Integer & operator+=(const long &rhs);
-  		Integer & operator-=(const long &rhs);
-  		Integer & operator*=(const long &rhs);
-  		Integer & operator/=(const long &rhs);
-  		Integer & operator%=(const long &rhs);
-  		Integer & operator+=(const unsigned long &rhs);
-  		Integer & operator-=(const unsigned long &rhs);
-  		Integer & operator*=(const unsigned long &rhs);
-  		Integer & operator/=(const unsigned long &rhs);
-  		Integer & operator%=(const unsigned long &rhs);
-  		
-  		const Integer operator+(const int &other) const;
-  		const Integer operator-(const int &other) const;
-  		const Integer operator*(const int &other) const;
-  		const Integer operator/(const int &other) const;
-  		const Integer operator%(const int &other) const;
-  		const Integer operator+(const unsigned int &other) const;
-  		const Integer operator-(const unsigned int &other) const;
-  		const Integer operator*(const unsigned int &other) const;
-  		const Integer operator/(const unsigned int &other) const;
-  		const Integer operator%(const unsigned int &other) const;
-  		const Integer operator+(const short &other) const;
-  		const Integer operator-(const short &other) const;
-  		const Integer operator*(const short &other) const;
-  		const Integer operator/(const short &other) const;
-  		const Integer operator%(const short &other) const;
-  		const Integer operator+(const unsigned short &other) const;
-  		const Integer operator-(const unsigned short &other) const;
-  		const Integer operator*(const unsigned short &other) const;
-  		const Integer operator/(const unsigned short &other) const;
-  		const Integer operator%(const unsigned short &other) const;
-  		const Integer operator+(const long &other) const;
-  		const Integer operator-(const long &other) const;
-  		const Integer operator*(const long &other) const;
-  		const Integer operator/(const long &other) const;
-  		const Integer operator%(const long &other) const;
-  		const Integer operator+(const unsigned long &other) const;
-  		const Integer operator-(const unsigned long &other) const;
-  		const Integer operator*(const unsigned long &other) const;
-  		const Integer operator/(const unsigned long &other) const;
-  		const Integer operator%(const unsigned long &other) const;
-  		
+
+        Integer & operator+=(const int &rhs);
+        Integer & operator-=(const int &rhs);
+        Integer & operator*=(const int &rhs);
+        Integer & operator/=(const int &rhs);
+        Integer & operator%=(const int &rhs);
+        Integer & operator+=(const unsigned int &rhs);
+        Integer & operator-=(const unsigned int &rhs);
+        Integer & operator*=(const unsigned int &rhs);
+        Integer & operator/=(const unsigned int &rhs);
+        Integer & operator%=(const unsigned int &rhs);
+        Integer & operator+=(const short &rhs);
+        Integer & operator-=(const short &rhs);
+        Integer & operator*=(const short &rhs);
+        Integer & operator/=(const short &rhs);
+        Integer & operator%=(const short &rhs);
+        Integer & operator+=(const unsigned short &rhs);
+        Integer & operator-=(const unsigned short &rhs);
+        Integer & operator*=(const unsigned short &rhs);
+        Integer & operator/=(const unsigned short &rhs);
+        Integer & operator%=(const unsigned short &rhs);
+        Integer & operator+=(const long &rhs);
+        Integer & operator-=(const long &rhs);
+        Integer & operator*=(const long &rhs);
+        Integer & operator/=(const long &rhs);
+        Integer & operator%=(const long &rhs);
+        Integer & operator+=(const unsigned long &rhs);
+        Integer & operator-=(const unsigned long &rhs);
+        Integer & operator*=(const unsigned long &rhs);
+        Integer & operator/=(const unsigned long &rhs);
+        Integer & operator%=(const unsigned long &rhs);
+
+        const Integer operator+(const int &other) const;
+        const Integer operator-(const int &other) const;
+        const Integer operator*(const int &other) const;
+        const Integer operator/(const int &other) const;
+        const Integer operator%(const int &other) const;
+        const Integer operator+(const unsigned int &other) const;
+        const Integer operator-(const unsigned int &other) const;
+        const Integer operator*(const unsigned int &other) const;
+        const Integer operator/(const unsigned int &other) const;
+        const Integer operator%(const unsigned int &other) const;
+        const Integer operator+(const short &other) const;
+        const Integer operator-(const short &other) const;
+        const Integer operator*(const short &other) const;
+        const Integer operator/(const short &other) const;
+        const Integer operator%(const short &other) const;
+        const Integer operator+(const unsigned short &other) const;
+        const Integer operator-(const unsigned short &other) const;
+        const Integer operator*(const unsigned short &other) const;
+        const Integer operator/(const unsigned short &other) const;
+        const Integer operator%(const unsigned short &other) const;
+        const Integer operator+(const long &other) const;
+        const Integer operator-(const long &other) const;
+        const Integer operator*(const long &other) const;
+        const Integer operator/(const long &other) const;
+        const Integer operator%(const long &other) const;
+        const Integer operator+(const unsigned long &other) const;
+        const Integer operator-(const unsigned long &other) const;
+        const Integer operator*(const unsigned long &other) const;
+        const Integer operator/(const unsigned long &other) const;
+        const Integer operator%(const unsigned long &other) const;
+
         const bool operator==(const int& rhs) const;
         const bool operator!=(const int& rhs) const;
         const bool operator> (const int& rhs) const;
@@ -148,38 +150,39 @@ class Integer{
         const bool operator>=(const unsigned long& rhs) const;
         const bool operator<=(const unsigned long& rhs) const;
 
-  		const void print() const;
-  		const std::string toString() const;
-  		const std::string debug() const;
-  		
-  		const Integer value() const;
-  		
-  		inline std::vector<int> const getNumber() const { return m_number; };
-  		inline Sign const getSign() const { return m_sign; };
-  		inline void setSign(Sign newSign) { m_sign = newSign; };
-  		inline void stripZeros() { stripZeros(m_number); };
- 	private:
-  		std::vector<int> m_number;
-  		Sign m_sign;
-  		static std::string intToString(int n);
-  		void copy(int source);
-  		void copy(unsigned int source);
-  		void copy(short source);
-  		void copy(unsigned short source);
-  		void copy(long source);
-  		void copy(unsigned long source);
-  		void copy(int* source, int size);
-  		
-  		static std::vector<int> addUnsigned(const Integer &lhs, const Integer &rhs);
-  		static std::vector<int> subtractUnsigned(const Integer &lhs, const Integer &rhs);
-  		static std::vector<int> multiplyUnsigned(const Integer &lhs, const Integer &rhs);
-  		static std::vector<int> divideUnsigned(const Integer &lhs, const Integer &rhs);
-  		static std::vector<int> moduloUnsigned(const Integer &lhs, const Integer &rhs);
+        const void print() const;
+        const std::string toString() const;
+        const std::string debug() const;
 
-  		static Integer recursiveDivide(Integer dividend, Integer divisor);
-  		static Integer recursiveModulo(Integer dividend, Integer divisor);
-  		
-  		static void stripZeros(std::vector<int> &source);
-  		static std::vector<int> zero();
+        const Integer value() const;
+
+        inline std::vector<int> const getNumber() const { return m_number; };
+        inline Sign const getSign() const { return m_sign; };
+        inline void setSign(Sign newSign) { m_sign = newSign; };
+        inline void stripZeros() { stripZeros(m_number); };
+    private:
+        std::vector<int> m_number;
+        Sign m_sign;
+        static std::string intToString(int n);
+        void copy(int source);
+        void copy(unsigned int source);
+        void copy(short source);
+        void copy(unsigned short source);
+        void copy(long source);
+        void copy(unsigned long source);
+        void copy(int* source, int size);
+        void copy(std::string source);
+
+        static std::vector<int> addUnsigned(const Integer &lhs, const Integer &rhs);
+        static std::vector<int> subtractUnsigned(const Integer &lhs, const Integer &rhs);
+        static std::vector<int> multiplyUnsigned(const Integer &lhs, const Integer &rhs);
+        static std::vector<int> divideUnsigned(const Integer &lhs, const Integer &rhs);
+        static std::vector<int> moduloUnsigned(const Integer &lhs, const Integer &rhs);
+
+        static Integer recursiveDivide(Integer dividend, Integer divisor);
+        static Integer recursiveModulo(Integer dividend, Integer divisor);
+
+        static void stripZeros(std::vector<int> &source);
+        static std::vector<int> zero();
 };
 #endif
