@@ -1,5 +1,14 @@
 # Integer
 
+```cpp
+#include <Integer.h>
+Integer myInteger = Integer("1234556709159591230592856");
+myInteger *= 2; //2469113418319182461185712
+myInteger /= 2; //1234556709159591230592856
+myInteger += 1; //1234556709159591230592857
+myInteger--; //1234556709159591230592856
+```
+
 This repository contains the Integer class.
 
 This class is a utility for doing arithmetic on large integers without strict precision limits.
